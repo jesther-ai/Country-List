@@ -1,4 +1,4 @@
-# Country-List Screenshoot
+# Country-List Screenshot
 
 Case1
 - Created a search bar that accepts string
