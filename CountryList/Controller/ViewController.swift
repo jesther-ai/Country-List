@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         //tableViewThings
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag
         searchBar.delegate = self
     }
     
