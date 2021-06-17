@@ -24,7 +24,7 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameLabel.text = "Country: \(countryDetail?.name ?? "NOT FOUND")"
+        nameLabel.text = countryDetail?.name ?? "NOT FOUND"
         capitalLabel.text = "Capital: \(countryDetail?.capital ?? "NOT FOUND")"
         regionLabel.text = "Region: \(countryDetail?.region ?? "NOT FOUND")"
         populationLabel.text = "Population: \(Self.numberFormatter.string(from: NSNumber(value: countryDetail?.population ?? 0)) ?? "NOT FOUND")"

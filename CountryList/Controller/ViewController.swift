@@ -114,7 +114,6 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource,UISearchBarDe
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filteredCountries.removeAll()
-        self.view.endEditing(true)
     }
     
 }
