@@ -8,8 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textField: UITextField!
     var countries = [CountryModel]()
     var filteredCountries = [CountryModel]()
     var filtered = false
@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         //tableViewThings
         tableView.delegate = self
         tableView.dataSource = self
-        textField.delegate = self
+        searchBar.delegate = self
     }
     
     
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
 }
 
 //MARK: - UITableView
-extension ViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
+extension ViewController:UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if !filteredCountries.isEmpty{
             return filteredCountries.count
@@ -91,6 +91,10 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showDetails", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
+        view.endEditing(true)
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -104,12 +108,13 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDe
     }
     
     
-    //textfield filter
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text{
-            filtertext(query: text+string)
-        }
-        return true
+    //searchfield filter
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            filtertext(query: searchText)
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filteredCountries.removeAll()
+        self.view.endEditing(true)
     }
     
 }
