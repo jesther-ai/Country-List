@@ -24,11 +24,12 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         nameLabel.text = countryDetail?.name ?? "NOT FOUND"
         capitalLabel.text = "Capital: \(countryDetail?.capital ?? "NOT FOUND")"
         regionLabel.text = "Region: \(countryDetail?.region ?? "NOT FOUND")"
         populationLabel.text = "Population: \(Self.numberFormatter.string(from: NSNumber(value: countryDetail?.population ?? 0)) ?? "NOT FOUND")"
-        alpha2CodeLabel.text = "Alpha Code: \(countryDetail?.alpha2Code ?? "NOT FOUND")"
+        alpha2CodeLabel.text = "Alpha Code: \(countryDetail?.alpha2Code ?? "NOT FOUND") | \(countryDetail?.alpha3Code ?? "NOT FOUND")"
         imageView.downloadedsvg(from: countryDetail?.flag ?? URL(string: "https://upload.wikimedia.org/wikipedia/commons/d/d5/No_sign.svg")!)
     }
     

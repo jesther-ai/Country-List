@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         //filtering function here
         filteredCountries.removeAll()
         for country in countries{
-            if country.name.lowercased().starts(with: query.lowercased()) || country.alpha2Code.lowercased().starts(with: query.lowercased()){
+            if country.name.lowercased().starts(with: query.lowercased()) || country.alpha2Code.lowercased().starts(with: query.lowercased()) || country.alpha3Code.lowercased().starts(with: query.lowercased()){
                 filteredCountries.append(country)
             }
 
@@ -79,23 +79,21 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource,UISearchBarDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! TableViewCell
         if !filteredCountries.isEmpty{
             cell.countryLabel.text = filteredCountries[indexPath.row].name
-            cell.countryCode.text = filteredCountries[indexPath.row].alpha2Code
+            cell.countryCode.text = "\(filteredCountries[indexPath.row].alpha2Code) | \(filteredCountries[indexPath.row].alpha3Code)"
             cell.imageCell.downloadedsvg(from: filteredCountries[indexPath.row].flag ?? URL(string: "https://upload.wikimedia.org/wikipedia/commons/d/d5/No_sign.svg")!)
         }else{
             cell.countryLabel.text = countries[indexPath.row].name
-            cell.countryCode.text = countries[indexPath.row].alpha2Code
+            cell.countryCode.text = "\(countries[indexPath.row].alpha2Code) | \(countries[indexPath.row].alpha3Code)"
             cell.imageCell.downloadedsvg(from: countries[indexPath.row].flag ?? URL(string: "https://upload.wikimedia.org/wikipedia/commons/d/d5/No_sign.svg")!)
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        view.endEditing(true)
+        searchBar.resignFirstResponder()
         performSegue(withIdentifier: "showDetails", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
-        view.endEditing(true)
-    }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        view.endEditing(true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -111,10 +109,14 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource,UISearchBarDe
     
     //searchfield filter
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            filtertext(query: searchText)
+        filtertext(query: searchText)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         filteredCountries.removeAll()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
