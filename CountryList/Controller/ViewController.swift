@@ -28,9 +28,10 @@ class ViewController: UIViewController {
         //filtering function here
         filteredCountries.removeAll()
         for country in countries{
-            if country.name.lowercased().starts(with: query.lowercased()){
+            if country.name.lowercased().starts(with: query.lowercased()) || country.alpha2Code.lowercased().starts(with: query.lowercased()){
                 filteredCountries.append(country)
             }
+
         }
         tableView.reloadData()
         filtered = true
